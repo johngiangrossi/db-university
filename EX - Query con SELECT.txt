@@ -1,0 +1,46 @@
+ex-1
+
+SELECT *
+FROM students
+WHERE YEAR(date_of_birth) = 1990;
+
+ex-2
+
+SELECT * 
+FROM `courses`
+WHERE `cfu` > "10";
+
+ex-3
+
+SELECT * 
+FROM `students`
+WHERE TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) > 30;
+
+ex-4
+
+SELECT * 
+FROM `courses`
+WHERE `period` = "I semestre" AND `year` = 1;
+
+ex-5
+SELECT *
+FROM `exams`
+WHERE DATE(`date`) = '2020-06-20'
+  AND TIME(`hour`) > '14:00:00';
+
+ex-6
+
+SELECT *
+FROM `degrees`
+WHERE `level` = 'magistrale';
+
+ex-7
+
+SELECT COUNT(*) AS `nr-departments`
+FROM `db-university`.departments;
+
+ex-8
+
+SELECT * 
+FROM `db-university`.teachers
+WHERE `phone` IS NULL ;

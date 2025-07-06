@@ -1,0 +1,73 @@
+EX.1
+
+SELECT `students`.* 
+FROM `degrees`
+JOIN `students`
+ON `students`.`degree_id` = `degrees`.`id`
+WHERE `degrees`.`name` LIKE 'Corso di Laurea in Economia';
+
+EX.2
+
+SELECT `degrees`.* 
+FROM `degrees`
+JOIN `departments`
+ON `degrees`.`department_id` = `departments`.`id`
+WHERE `degrees`.`level` LIKE 'magistrale' AND  `departments`.`name` LIKE 'Dipartimento di Neuroscienze';
+
+EX.3
+
+SELECT `courses`.* 
+FROM `teachers`
+JOIN `course_teacher`
+ON `teachers`.`id` = `course_teacher`.`teacher_id`
+JOIN `courses`
+ON `courses`.`id` = `course_teacher`.`course_id`
+WHERE `teachers`.`id` = 44;
+
+EX.4
+
+SELECT `students`.* ,   `departments`.`name` AS `department`,  `degrees`.`name` AS `degree`
+FROM `students`
+JOIN `degrees`
+ON `students`.`degree_id` = `degrees`.`id`
+JOIN `departments`
+ON `departments`.`id` = `degrees`.`department_id`
+ORDER BY `students`.`surname` ASC;
+
+EX.5
+
+SELECT `degrees`.*, `courses`.`name` AS `course`, CONCAT(`teachers`.`name`,' ',`teachers`.`surname`) AS `teacher`
+FROM `teachers`
+JOIN `course_teacher`
+ON `teachers`.`id` = `course_teacher`.`teacher_id`
+JOIN `courses`
+ON `courses`.`id` = `course_teacher`.`course_id`
+JOIN `degrees`
+ON `degrees`.`id` = `courses`.`degree_id`;
+
+EX.6
+
+SELECT DISTINCT `teachers`.*, `departments`.`name`
+FROM `teachers`
+JOIN `course_teacher`
+ON `teachers`.`id` = `course_teacher`.`teacher_id`
+JOIN `courses`
+ON `courses`.`id` = `course_teacher`.`course_id`
+JOIN `degrees`
+ON `degrees`.`id` = `courses`.`degree_id`
+JOIN `departments`
+ON `degrees`.`department_id` = `departments`.`id`
+WHERE `departments`.`name` LIKE 'Dipartimento di Matematica';
+
+EX.7
+
+SELECT COUNT(*) AS `total`, `courses`.`id` AS `course_id` , `students`.`id` AS `student_id`, MAX(`exam_student`.`vote`) AS `max_vote`
+FROM `students`
+JOIN `exam_student`
+ON `students`.`id` = `exam_student`.`student_id`
+JOIN `exams`
+ON `exams`.`id` = `exam_student`.`exam_id`
+JOIN `courses`
+ON `courses`.`id` = `exams`.`course_id`
+GROUP BY `courses`.`id`, `students`.`id`
+HAVING `max_vote` >= 18;
